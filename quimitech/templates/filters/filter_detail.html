@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Filtros Cadastrados{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12 text-center mb-4">
+            <h1>{{ filter.unique_code }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <p><strong>Localização:</strong> {{ filter.location }}</p>
+            <p><strong>Data de Cadastro:</strong> {{ filter.sync_date }}</p>
+        </div>
+        <div class="col-md-6 text-end">
+            <a href="{% url 'export_filter_pdf' filter.id %}" class="btn btn-success">
+                <i class="fas fa-file-pdf"></i> Exportar PDF
+            </a>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h3>Imagens Iniciais</h3>
+        </div>
+        {% for image in filter.mass_initial_images.all %}
+            <div class="col-md-3 mb-3">
+                <img src="{{ image.file.url }}" alt="Initial Mass" class="img-thumbnail" style="height: 150px; width: auto;">
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h3>Imagens Finais</h3>
+        </div>
+        {% for image in filter.mass_final_images.all %}
+            <div class="col-md-3 mb-3">
+                <img src="{{ image.file.url }}" alt="Final Mass" class="img-thumbnail" style="height: 150px; width: auto;">
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

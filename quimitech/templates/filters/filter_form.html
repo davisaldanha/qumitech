@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Cadastrar Filtro{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h3>Cadastrar Filtro</h3>
+                <form action="{% url 'register_filter' %}" enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="id_unique_code" class="form-label">Código</label>
+                        {{ form.unique_code }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_mass_initial_images">Imagens Iniciais</label>
+                        <input type="file" name="mass_initial_images" id="id_mass_initial_images" multiple class="form-control">
+                    </div>
+                    <div class="row">
+                        {% for image in mass_initial_images %}
+                            <div class="col-md-3">
+                                <img src="{{ image.url }}" class="img-thumbnail" alt="Imagem Inicial">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_mass_final_images">Imagens Finais</label>
+                        <input type="file" name="mass_final_images" id="id_mass_final_images" multiple class="form-control">
+                    </div>
+                    <div class="row">
+                        {% for image in mass_final_images %}
+                            <div class="col-md-3">
+                                <img src="{{ image.url }}" class="img-thumbnail" alt="Imagem Final">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_location" class="form-label">Localização</label>
+                        {{ form.location }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if error_message %}
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Erro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{ error_message }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<script>
+    {% if error_message %}
+        displayModalErrorForm()
+    {% endif %}
+</script>
+
+{% endblock content%}

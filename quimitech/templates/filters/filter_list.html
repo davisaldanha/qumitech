@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Filtros Cadastrados{% endblock %}
+
+{% block content %}
+
+<form method="get">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label for="unique_code" class="form-label">Código do Filtro</label>
+            <input type="text" id="unique_code" name="unique_code" class="form-control" placeholder="" value="{{ request.GET.unique_code }}">
+        </div>
+        <div class="col-md-3">
+            <label for="start_date" class="form-label">Data Inicial</label>
+            <input type="date" id="start_date" name="start_date" class="form-control" value="{{ request.GET.start_date }}">
+        </div>
+        <div class="col-md-3">
+            <label for="end_date" class="form-label">Data Final</label>
+            <input type="date" id="end_date" name="end_date" class="form-control" value="{{ request.GET.end_date }}">
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary">Pesquisar</button>
+        </div>
+    </div>
+</form>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Localização</th>
+            <th>Data</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for filter in filters %}
+        <tr>
+            <td><a href="{{ filter.get_absolute_url }}">{{ filter.unique_code }}</a></td>
+            <td>{{ filter.location }}</td>
+            <td>{{ filter.sync_date }}</td>
+            <td>
+                <a href="{% url 'filter_edit' filter.id %}" class="btn btn-warning btn-sm">Editar</a>
+                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ filter.id }}">Excluir</button>
+
+                <div class="modal fade" id="deleteModal{{ filter.id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Você realmente deseja excluir o filtro "{{ filter.unique_code }}"?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <form method="post" action="{% url 'filter_delete' filter.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Excluir</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table> 
+
+{% endblock content%}

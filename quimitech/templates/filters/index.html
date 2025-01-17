@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Filtros{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-sm-6 mb-3 mb-sm-0">
+      <div class="card text-white bg-primary">
+          <div class="card-body">
+              <h5 class="card-title">Total de Filtros</h5>
+              <p class="card-text fs-3">{{ total_filters }}</p>
+          </div>
+      </div>
+  </div>
+  <div class="col-sm-6 mb-3 mb-sm-0">
+      <div class="card text-white bg-success">
+          <div class="card-body">
+              <h5 class="card-title">Seus Filtros</h5>
+              <p class="card-text fs-3">{{ user_filters }}</p>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-sm-6 mb-3 mb-sm-0">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Cadastrar Filtros</h5>
+          <p class="card-text">Realize o cadastro de novos filtros no sistema, incluindo informações importantes para análises futuras</p>
+          <a href="{% if user.is_authenticated %}{% url 'register_filter' %}{% else %}{% url 'index' %}{% endif %}" class="btn btn-primary">Acessar</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Listar Filtros</h5>
+          <p class="card-text">Procure por filtros com agilidade e rápidez. Customize suas pesquisas de acordo com sua necessidade.</p>
+          <a href="{% if user.is_authenticated %}{% url 'filter_list' %}{% else %}{% url 'index' %}{% endif %}" class="btn btn-primary">Acessar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
