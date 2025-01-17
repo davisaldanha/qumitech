@@ -13,12 +13,19 @@ QUIMITECH é um projeto Django para gerenciamento de filtros. Este README fornec
 git clone https://github.com/davisaldanha/quimitech.git
 cd quimitech
 ```
-### 2. Ativar um ambiente virtual
+### 2. Criar e ativar um ambiente virtual
 
 ```sh
+python -m venv venv
 source venv/bin/activate  # No Windows use `venv\Scripts\activate`
 ```
-### 3. Executar o servidor de desenvolvimento
+
+### 3. Instalar as dependências
+```sh
+pip install -r requirements.txt
+```
+
+### 4. Executar o servidor de desenvolvimento
 ```sh
 python manage.py runserver
 ```
